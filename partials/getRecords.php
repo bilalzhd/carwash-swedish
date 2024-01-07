@@ -10,12 +10,15 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["date"])) {
     $totalRecords = 0;
     $total = 0;
     if ($result) {
-        while ($row = mysqli_fetch_assoc($result)) {
+        $row = mysqli_fetch_assoc($result);
+        if ($row['hall_1'] != NULL) {
             for ($i = 1; $i <= $row['number_of_halls']; $i++) {
                 $total += $row['hall_' . $i];
             }
             $totalRecords = $total;
-        };
+        } else {
+            $totalRecords = NULL;
+        }
 
         // Return the result as JSON
         header('Content-Type: application/json');

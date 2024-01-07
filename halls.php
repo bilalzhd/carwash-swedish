@@ -133,7 +133,48 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST["edit_user"]))) {
 
 </body>
 <!-- edit popup -->
+<div class="hidden min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover" id="edit-popup">
+    <div class="absolute bg-black opacity-80 inset-0 z-0"></div>
+    <div class="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white ">
+        <div class="">
+            <div class="p-5 flex-auto">
+                <div class="text-indigo-500 flex w-full flex-col items-center space-y-4">
+                    <i class="fa fa-pencil text-3xl md:text-4xl"></i>
+                    <h3 class="text-3xl md:text-4xl font-bold text-center">Edit Customer</h3>
+                </div>
+                <form method="POST" action="?" class="overflow-y-auto">
+                    <input type="hidden" id="user_id" name="user_id">
+                    <div class="max-w-5xl mx-auto border-gray-900/10 pb-0 md:pb-12">
+                        <div class="mt-10 gap-x-6 space-y-6">
+                            <div>
+                                <label for="name" class="block text-xl font-medium leading-6 text-gray-900">Number of Halls</label>
+                                <div class="mt-2">
+                                    <input class="px-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="number" min="1" max="10" name="number_of_halls" id="number_of_halls" placeholder="Enter name" required>
 
+                                </div>
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-xl font-medium leading-6 text-gray-900">Last Updated</label>
+                                <div class="mt-2">
+                                    <input disabled class="px-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 date" type="text" required>
+                                    <input type="hidden" class="date" name="date" id="date">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+            <!--footer-->
+            <div class="p-3  mt-2 text-center md:space-x-4 md:block">
+                <button id="close-edit-popup" type="button" class="w-full md:w-auto mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100">
+                    Cancel
+                </button>
+                <button type="submit" name="edit_user" class="w-full md:w-auto mb-2 md:mb-0 bg-indigo-500 border-indigo-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-indigo-700">Save Changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
@@ -163,9 +204,9 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST["edit_user"]))) {
         });
     });
 
-    // document.getElementById("close-edit-popup").addEventListener("click", function() {
-    //     document.querySelector("#edit-popup").classList.add("hidden")
-    // })
+    document.getElementById("close-edit-popup").addEventListener("click", function() {
+        document.querySelector("#edit-popup").classList.add("hidden")
+    })
 
     const deleteButton = document.querySelectorAll(".delete-hall-button")
     deleteButton.forEach((button) => {

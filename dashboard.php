@@ -79,14 +79,14 @@ $role = $_SESSION['role'];
                             </div>
                         </div>
                     </div>
-                    <script src="script.js"></script>
                 </body>
-
+                
                 </html>
             </div>
         </main>
     </div>
-
+    
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="script.js"></script>
 <script src="functions.js"></script>

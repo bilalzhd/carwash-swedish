@@ -3,7 +3,7 @@ include_once("./db_connect.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $date = $_GET['date'];
-    $stmt = $conn->prepare("SELECT * FROM halls WHERE date = '$date'");
+    $stmt = $conn->prepare("SELECT * FROM halls WHERE id = '$date'");
     $stmt->execute();
 
     $result = $stmt->get_result();

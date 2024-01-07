@@ -60,14 +60,9 @@ async function renderCalendar() {
         // check if its today then add today class
         const response = await fetch(`partials/getRecords.php?date=${link}`);
         const data = await response.json();
-        const totalRecords = data.totalRecords && data.totalRecords;
-        
-        if (
-            i === new Date().getDate() &&
-            currentMonth === new Date().getMonth() &&
-            currentYear === new Date().getFullYear()
-        ) {
-            if(totalRecords) {
+        let totalRecords = data.totalRecords;
+        if (i === new Date().getDate() && currentMonth === new Date().getMonth() && currentYear === new Date().getFullYear()) {
+            if(totalRecords != null) {
                 days += `<a class="day today" href="records.php?date=${link}"><div class="day-container">${i} <span class="badge">${totalRecords}<span></div></a>`;
             } else {
                 days += `<a class="day today" href="records.php?date=${link}"><div class="day-container">${i} </div></a>`;
@@ -75,7 +70,7 @@ async function renderCalendar() {
             // if date month year matches add today
         } else {
             //else dont add today
-            if(totalRecords) {
+            if(totalRecords != null) {
                 days += `<a class="day" href="records.php?date=${link}"><div class="day-container">${i} <span class="badge">${totalRecords}</span></div></a>`;
             } else {
                 days += `<a class="day" href="records.php?date=${link}"><div class="day-container">${i} </div></a>`;

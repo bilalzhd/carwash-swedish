@@ -37,12 +37,20 @@ if (mysqli_num_rows($records) > 0) {
 // echo $num_halls;
 // die();
 $string_date = strtotime($date);
+// check if there is an entry for the customer then show that too
+mysqli_data_seek($records, 0);
+
 $query = "SELECT c.id AS customer_id, c.name AS customer_name, c.delete_on,";
 for ($i = 1; $i <= $num_halls; $i++) {
     $query .= "r.hall_" . $i . ",";
 };
-$query .= "r.number_of_halls, r.date FROM customers c LEFT JOIN records_2 r ON c.id = r.customer_id AND r.date = '$date' WHERE c.timestamp <= '$string_date' AND (c.delete_on = 0 OR c.delete_on > '$string_date');";
+if (mysqli_num_rows($records) > 0) {
+    $query .= "r.number_of_halls, r.date FROM customers c LEFT JOIN records_2 r ON c.id = r.customer_id AND r.date = '$date' WHERE c.timestamp <= '$string_date' AND (c.delete_on = 0 OR c.delete_on >= '$string_date');";
+} else {
+    $query .= "r.number_of_halls, r.date FROM customers c LEFT JOIN records_2 r ON c.id = r.customer_id AND r.date = '$date' WHERE c.timestamp <= '$string_date' AND (c.delete_on = 0 OR c.delete_on > '$string_date');";
+}
 $result = mysqli_query($conn, $query);
+
 if (mysqli_num_rows($records) < 1) {
     $no_records = true;
 }
