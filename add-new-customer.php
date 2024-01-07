@@ -331,6 +331,6 @@ Det uppstod ett fel när kunden lades till, försök igen senare eller kontakta 
     document.querySelector('#deleteOn').value = todayDate
     document.querySelector('#deleteOn').min = todayDate
     document.querySelector('#timestamp').value = todayDate
-    document.querySelector('#timestamp').min = todayDate
+    // document.querySelector('#timestamp').min = todayDate
 </script>
 <script src="functions.js"></script>

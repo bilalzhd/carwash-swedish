@@ -114,18 +114,9 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST["edit_user"]))) {
                                 <td class="w-2/5">' . $hall['date'] . '</td>
                                 <td class="w-1/5 flex whitespace-nowrap">
                                 <div class="flex space-x-2">
-                                <button id="' . $hall['id'] . '" data-id="' . $hall['id'] . '" class="edit-hall-button flex items-center hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full text-white px-4 py-2 rounded-lg">
-                                
-Redigera
-                                </button>
-                                <button id="' . $hall['id'] . '" data-id="' . $hall['id'] . '" class="delete-hall-button flex items-center hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full text-white px-4 py-2 rounded-lg">
-                                
-Radera
-                                </button>
-                                <button data-id="' . $hall['id'] . '" class="submit-edit-button hidden flex hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full items-center text-white px-4 py-2 rounded-lg"> 
-                                    
-Skicka in
-                                </button>
+                                <button id="' . $hall['id'] . '" data-id="' . $hall['id'] . '" class="edit-hall-button flex items-center hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full text-white px-4 py-2 rounded-lg">Redigera</button>
+                                <button id="' . $hall['id'] . '" data-id="' . $hall['id'] . '" class="delete-hall-button flex items-center hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full text-white px-4 py-2 rounded-lg">Radera</button>
+                                <button data-id="' . $hall['id'] . '" class="submit-edit-button hidden flex hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full items-center text-white px-4 py-2 rounded-lg">Skicka in</button>
                                 <button data-id="' . $hall['id'] . '" class="cancel-edit-button hidden flex hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full items-center text-white px-4 py-2 rounded-lg"> 
                                 Annullera
                                 </button>
@@ -172,9 +163,9 @@ Skicka in
         });
     });
 
-    document.getElementById("close-edit-popup").addEventListener("click", function() {
-        document.querySelector("#edit-popup").classList.add("hidden")
-    })
+    // document.getElementById("close-edit-popup").addEventListener("click", function() {
+    //     document.querySelector("#edit-popup").classList.add("hidden")
+    // })
 
     const deleteButton = document.querySelectorAll(".delete-hall-button")
     deleteButton.forEach((button) => {

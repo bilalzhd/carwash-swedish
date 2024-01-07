@@ -18,15 +18,24 @@ $records = mysqli_query($conn, "SELECT * FROM records_2 WHERE date = '$today_dat
 $num_halls;
 $halls_query = mysqli_query($conn, "SELECT count FROM halls WHERE date <= '$today_date' ORDER by date DESC LIMIT 1");
 $no_records_halls = mysqli_fetch_assoc($halls_query);
-if (mysqli_num_rows($halls_query) > 1) {
+if (mysqli_num_rows($records) > 0) {
     $num_halls = mysqli_fetch_assoc($records)['number_of_halls'];
 } else {
-    if (isset($no_records_halls)) {
-        $num_halls = $no_records_halls['count'];
+    if (mysqli_num_rows($halls_query) > 1) {
+        $num_halls = mysqli_fetch_assoc($records)['number_of_halls'];
     } else {
-        $num_halls = mysqli_fetch_assoc(mysqli_query($conn, "SELECT count FROM halls WHERE date >= '$today_date' ORDER by date ASC LIMIT 1"))['count'];
+        // if there is number of halls set for that date then set those
+        if (isset($no_records_halls)) {
+            $num_halls = $no_records_halls['count'];
+        } else {
+            // get the latest number of halls
+            $num_halls = mysqli_fetch_assoc(mysqli_query($conn, "SELECT count FROM halls WHERE date >= '$today_date' ORDER by date ASC LIMIT 1"))['count'];
+        }
     }
 }
+
+// echo $num_halls;
+// die();
 $string_date = strtotime($date);
 $query = "SELECT c.id AS customer_id, c.name AS customer_name, c.delete_on,";
 for ($i = 1; $i <= $num_halls; $i++) {
@@ -55,12 +64,6 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST["edit_record"]))) {
     for ($i = 1; $i <= $number_of_halls; $i++) {
         $hallValues[] = $_POST["hall_$i"];
     }
-    // echo $customer;
-    // echo $date;
-    // echo $id;
-    // echo $number_of_halls;
-    // echo $hallValues;
-    // die();
     $entryAlreadyRecordedQuery = mysqli_query($conn, "SELECT * FROM records_2 WHERE customer_id = '$customer' AND date = '$date'");
     $checkIfSameNameQuery = mysqli_query($conn, "SELECT * FROM records_2 WHERE id = '$id'");
     $sameName = false;
@@ -166,6 +169,8 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST["edit_record"]))) {
                     </thead>
                     <tbody>
                         <?php
+                        // echo $num_halls;
+                        // die();
                         // mysqli_data_seek($records, 0);
                         $customers = mysqli_query($conn, $query);
                         while ($customer = mysqli_fetch_assoc($customers)) {
