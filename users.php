@@ -399,11 +399,7 @@ Välj roll</option>
                         trObj.find(".cancelBtn").hide();
                         trObj.find(".editBtn").show();
                         trObj.find(".deleteBtn").show();
-<<<<<<< HEAD
-                        alert(response.msg);
-=======
                         // alert(response.msg);
->>>>>>> ed74305ab451a2147a8c2986303f864b549dd31e
                         window.location.reload();
                     }
                     $('#userData').css('opacity', '');
