@@ -125,7 +125,7 @@ Det uppstod ett fel när kunden lades till, försök igen senare eller kontakta 
                     <?php
                     while ($user = mysqli_fetch_assoc($users)) {
                         $delete_on_string = $user['delete_on'] > 0 ? date("Y-m-d", intval($user['delete_on'])) : "Not Deleted";
-                        echo '<tr id="' . $user['id'] . '" data-id="' . $user['id'] . '">
+                        echo '<tr id="' . $user['id'] . '" data-id="' . $user['id'] . '" data-date="'.date("Y-m-d", $user['delete_on']).'">
                             <td>
                                 <span class="editSpan name">' . $user['name'] . '</span>
                                 <input class="editInput px-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text" name="edit_name" id="edit_name" placeholder="Enter name" required style="display: none" value="' . $user['name'] . '">
@@ -135,7 +135,7 @@ Det uppstod ett fel när kunden lades till, försök igen senare eller kontakta 
                             <input class="editInput px-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text" name="edit_phone" id="edit_phone" value="' . $user['phone'] . '" required style="display: none">
                             </td>
                             <td>' . date("Y-m-d", intval($user['timestamp'])) . '</td>
-                            <td>' . $delete_on_string . '</td>
+                            <td class="deleteOnCol" id="'.$delete_on_string.'">' . $delete_on_string . '</td>
                             <td class="flex whitespace-nowrap">
                                 <div class="flex space-x-2">
                                     <button data-id="' . $user['id'] . '" class="editBtn flex items-center hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full text-white px-4 py-2 rounded-lg">
@@ -273,21 +273,19 @@ Det uppstod ett fel när kunden lades till, försök igen senare eller kontakta 
             //hide edit & delete button
             $("#edit-popup").show();
             var ID = $(this).closest("tr").attr('id');
+            var deleteOn = $(this).closest("tr").data('date');
+            console.log(deleteOn);
+            $("#deleteOn").val(deleteOn);
             $("#user_id").val(ID);
-            // $(this).closest("tr").find(".deleteBtn").hide();
-
-            // // show confirm & cancel button
-            // $(this).closest("tr").find(".confirmBtn").show();
-            // $(this).closest("tr").find(".cancelBtn").show();
 
         });
+
         $('#close-edit-popup').on('click', function() {
             $("#edit-popup").hide();
         })
 
         $('#edit_user').on('click', function() {
             $('#userData').css('opacity', '.5');
-
             var deleteOn = $("#deleteOn").val();
             var id = $("#user_id").val();
             var trObj = $(id);
@@ -301,6 +299,7 @@ Det uppstod ett fel när kunden lades till, försök igen senare eller kontakta 
                     if (response.status == 1) {
                         trObj.remove();
                         $("#edit-popup").hide();
+                        window.location.reload();
                     } else {
                         trObj.find(".confirmBtn").hide();
                         trObj.find(".cancelBtn").hide();
