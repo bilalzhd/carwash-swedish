@@ -136,11 +136,11 @@ Det uppstod ett fel när kunden lades till, försök igen senare eller kontakta 
                             </td>
                             <td>' . date("Y-m-d", intval($user['timestamp'])) . '</td>
                             <td class="deleteOnCol" id="'.$delete_on_string.'">' . $delete_on_string . '</td>
-                            <td class="flex whitespace-nowrap">
-                                <div class="flex space-x-2">
-                                    <button data-id="' . $user['id'] . '" class="editBtn flex items-center hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full text-white px-4 py-2 rounded-lg">
-                                    Redigera</button>
+                            <td class="flex">
+                                <div class="flex space-x-2"> 
+                                    <button data-id="' . $user['id'] . '" class="editBtn flex items-center hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full text-white px-4 py-2 rounded-lg">Redigera</button>
                                     <button data-id="' . $user['id'] . '" class="deleteBtn flex hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full items-center text-white px-4 py-2 rounded-lg">Radera</button>
+                                    <button data-id="' . $user['id'] . '" class="undoDeleteBtn flex hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full items-center text-white px-4 py-2 rounded-lg">Ångra Radera</button>
                                     <button data-id="' . $user['id'] . '" class="saveBtn flex hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full items-center text-white px-4 py-2 rounded-lg" style="display: none;">Spara</button>
                                     <button data-id="' . $user['id'] . '" class="confirmBtn flex hover:bg-indigo-700 transition-all duration-300 bg-indigo-500 w-full items-center text-white px-4 py-2 rounded-lg" style="display: none;">
                                     Bekräfta
@@ -279,6 +279,24 @@ Det uppstod ett fel när kunden lades till, försök igen senare eller kontakta 
             $("#user_id").val(ID);
 
         });
+        $('.undoDeleteBtn').on('click', function() {
+            if(confirm("Do you really want to undo delete?")){
+                var id = $(this).data("id")
+                $.ajax({
+                    type: 'POST',
+                    url: 'partials/undoDeleteCustomer.php',
+                    dataType: 'json',
+                    data: `id=${id}`,
+                    success: function(response) {
+                        if(response.status == 1) {
+                            window.location.reload();
+                        } else {
+                            alert(response.msg)
+                        }
+                    }
+                })
+            }
+        })
 
         $('#close-edit-popup').on('click', function() {
             $("#edit-popup").hide();
