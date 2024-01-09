@@ -4,14 +4,14 @@ include_once("./db_connect.php");
 if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["date"])) {
     $date = $_GET["date"];
     $string_date = strtotime($date);
-    $query = "SELECT  c.id AS customer_id, c.name AS customer_name, c.delete_on, r.hall_1, r.hall_2, r.hall_3, r.hall_4, r.hall_5, r.hall_6, r.hall_7, r.hall_8, r.hall_9, r.hall_10, r.number_of_halls, r.date FROM customers c LEFT JOIN records_2 r ON c.id = r.customer_id AND r.date = '$date' WHERE c.timestamp <= '$string_date' AND (c.delete_on = 0 OR c.delete_on >= '$string_date');";
+    $query = "SELECT  c.id AS customer_id, c.delete_on, r.hall_1, r.hall_2, r.hall_3, r.hall_4, r.hall_5, r.hall_6, r.hall_7, r.hall_8, r.hall_9, r.hall_10, r.number_of_halls, r.date FROM customers c LEFT JOIN records_2 r ON c.id = r.customer_id AND r.date = '$date' WHERE c.timestamp <= '$string_date' AND (c.delete_on = 0 OR c.delete_on >= '$string_date');";
 
     $result = mysqli_query($conn, $query);
     $totalRecords = 0;
     $total = 0;
     if ($result) {
         $row = mysqli_fetch_assoc($result);
-        if ($row['hall_1'] != NULL) {
+        if (isset($row['hall_1']) && $row['hall_1'] != NULL) {
             for ($i = 1; $i <= $row['number_of_halls']; $i++) {
                 $total += $row['hall_' . $i];
             }

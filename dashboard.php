@@ -5,13 +5,34 @@ $page_title = "Dashboard";
 include "partials/head.php";
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
-    exit(); 
+    exit();
 }
 $role = $_SESSION['role'];
 ?>
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
 <link rel="stylesheet" href="style.css">
 <style>
+    #loading-indicator {
+        /* display: none; */
+        width: 50px;
+        height: 50px;
+        transform: translateX(-50%);
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
     body {
         margin: 0;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -40,12 +61,13 @@ $role = $_SESSION['role'];
     }
 </style>
 <?php include("./partials/header.php") ?>
+
 <body>
     <div class="min-h-full">
         <main>
             <div class="mx-auto max-w-5xl py-6 sm:px-6 lg:px-8">
 
-                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
                 </head>
 
                 <body>
@@ -75,17 +97,18 @@ $role = $_SESSION['role'];
                                 <div class="day">Sat</div>
                             </div>
                             <div class="days">
+                                <div id="loading-indicator"></div>
                                 <!-- lets add days using js -->
                             </div>
                         </div>
                     </div>
                 </body>
-                
+
                 </html>
             </div>
         </main>
     </div>
-    
+
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="script.js"></script>
