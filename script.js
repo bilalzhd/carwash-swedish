@@ -53,6 +53,7 @@ let currentYear = date.getFullYear();
 
 // function to render days
 async function renderCalendar() {
+    daysContainer.innerHTML = "<div id='loading-indicator'></div>";
   // Set loading state to true initially
   let isLoading = true;
   showLoadingIndicator();
@@ -79,6 +80,8 @@ async function renderCalendar() {
 
   // current month days
   for (let i = 1; i <= lastDayDate; i++) {
+    isLoading = true;
+    showLoadingIndicator();
     let linkDay = i < 10 ? "0" + i : i;
     let link = `${currentYear}-${currentMonth + 1}-${linkDay}`;
     // check if its today then add today class
@@ -89,7 +92,7 @@ async function renderCalendar() {
     } catch (error) {
       console.error(error);
     }
-    
+
     isLoading = false;
     hideLoadingIndicator();
 
