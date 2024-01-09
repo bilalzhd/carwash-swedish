@@ -88,10 +88,10 @@ async function renderCalendar() {
       totalRecords = data.totalRecords;
     } catch (error) {
       console.error(error);
-    } finally {
-      isLoading = false;
-      hideLoadingIndicator();
     }
+    
+    isLoading = false;
+    hideLoadingIndicator();
 
     function updateCalendar() {
       if (

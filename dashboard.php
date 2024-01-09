@@ -13,8 +13,10 @@ $role = $_SESSION['role'];
 <link rel="stylesheet" href="style.css">
 <style>
     #loading-indicator {
-        /* display: none; */
+        display: none;
         width: 50px;
+        margin-inline: auto;
+        margin-top: 10px;
         height: 50px;
         transform: translateX(-50%);
         border: 5px solid #f3f3f3;
